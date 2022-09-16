@@ -9,16 +9,16 @@ use App\Models\Kelas;
 class Mahasiswa extends Model
 {
     use HasFactory;
-    protected $table='Mahasiswa'; //Eloquent membuat model mahasiswa menyimpan record di table mahasiswa
-    protected $primarykey='nim'; //Memamnggil isi DB dengan primary key
+    protected $table = 'Mahasiswa'; //Eloquent membuat model mahasiswa menyimpan record di table mahasiswa
+    protected $primarykey = 'nim'; //Memamnggil isi DB dengan primary key
 
     protected $fillable = [
         'nim',
         'nama',
-        'kelas_id',
+        'kelas',
         'jurusan',
     ];
-    
+
     public function kelas()
     {
         return $this->belongsTo(Kelas::class);
