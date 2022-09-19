@@ -18,11 +18,15 @@
                             </ul>
                         </div>
                     @endif
-                    <form method="post" action="{{ route('mahasiswa.store') }}" id="myForm">
+                    <form method="post" action="{{ route('mahasiswa.store') }}" id="myForm" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="nim">Nim</label>
                             <input type="text" name="nim" class="form-control" id="nim" aria-describedby="nim">
+                        </div>
+                        <div class="form-group">
+                            <label for="berkas">Berkas</label>
+                            <input type="file" class="form-control" required="required" name="berkas" id="berkas">
                         </div>
                         <div class="form-group">
                             <label for="nama">Nama</label>

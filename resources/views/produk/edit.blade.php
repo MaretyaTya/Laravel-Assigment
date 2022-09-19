@@ -27,11 +27,6 @@
                                 value="{{ $Mahasiswa->nim }}" aria-describedby="nim">
                         </div>
                         <div class="form-group">
-                            <label for="foto">foto</label>
-                            <input type="file" name="foto" class="form-control" id="fioto"
-                                value="{{ $Mahasiswa->foto }}" aria-describedby="foto">
-                        </div>
-                        <div class="form-group">
                             <label for="nama">nama</label>
                             <input type="text" name="nama" class="form-control" id="nama"
                                 value="{{ $Mahasiswa->nama }}" aria-describedby="nama">

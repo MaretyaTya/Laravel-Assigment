@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class MahasiswaController extends Controller
 {
@@ -45,15 +46,23 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
+        echo $request->file('berkas');
         //melakukan validasi data
-        $request->validate([
+        $files = $request->validate([
             'nim' => 'required',
             'nama' => 'required',
             'kelas' => 'required',
             'jurusan' => 'required',
+            'berkas' => 'mimes:jpg,jpeg,png',
         ]);
+
+        if ($request->file('berkas')) {
+            $files['berkas'] = $request->file('berkas')->store('berkas', 'public');
+        }
+
         //fungsi eloquent untuk menambah data
-        Mahasiswa::create($request->all());
+        Mahasiswa::create($files);
+
         //jika data berhasil ditambahkan, akan kembali ke halaman utama
         return redirect()->route('mahasiswa.index')
             ->with('success', 'Mahasiswa Berhasil Ditambahkan');
@@ -120,5 +129,12 @@ class MahasiswaController extends Controller
         //fungsi eloquent untuk menghapus data          
         Mahasiswa::find($nim)->delete();
         return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa Berhasil Dihapus');
+    }
+
+    public function printPDF()
+    {
+        $mahasiswa = Mahasiswa::all();
+        $pdf = Pdf::loadView('cetak_pdf', ['mahasiswa' => $mahasiswa]);
+        return $pdf->stream();
     }
 }
